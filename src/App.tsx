@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 import "./App.css";
 
 function App() {
-
   return (
     <>
-      <div className="m-20">hey</div>
+      <RouterProvider router={router} />
     </>
   );
 }

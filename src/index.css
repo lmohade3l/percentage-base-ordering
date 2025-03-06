@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  direction: rtl
+}
+
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));

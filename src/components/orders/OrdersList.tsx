@@ -1,5 +1,8 @@
 import useSWR from "swr";
 import CustomTable from "../table";
+import { OrderType } from "@/types/order";
+import { formatPersianNumber } from "@/lib/numberUtils";
+import { formatJallali } from "@/lib/dateUtils";
 
 export default function OrdersList({
   marketId,
@@ -33,18 +36,36 @@ export default function OrdersList({
       accessor: "value",
     },
   ];
+  
   const dealsColumns = [
     {
       header: "مقدار هدف",
       accessor: "match_amount",
+      render: (row: OrderType) => (
+        <div className="flex flex-col">
+          <span>{formatPersianNumber(Number(row?.match_amount), 2)}</span>
+          <span className="text-[#676767]"> {"toman"}</span>
+        </div>
+      ),
     },
     {
       header: "قیمت",
       accessor: "price",
+      render: (row: OrderType) => (
+        <div className="flex flex-col">
+          <span>{formatPersianNumber(Number(row?.price), 4)}</span>
+          <span className="text-[#676767]"> {"toman"}</span>
+        </div>
+      ),
     },
     {
       header: "تاریخ",
       accessor: "time",
+      render: (row: OrderType) => (
+        <div className="flex flex-col">
+          <span>{formatJallali(row?.time)}</span>
+        </div>
+      ),
     },
   ];
   return (

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import CustomTable from "../table";
+import CustomTable, { Column } from "../table";
 import { OrderType } from "@/types/order";
 import { formatPersianNumber } from "@/lib/numberUtils";
 import { formatJallali } from "@/lib/dateUtils";
@@ -22,14 +22,14 @@ export default function OrdersList({
 
   console.log({ type });
 
-  const buyOrsellColumns = [
+  const buyOrsellColumns: Column<OrderType>[] = [
     {
       header: "باقی مانده",
       accessor: "remain",
       render: (row: OrderType) => (
         <div className="flex flex-col">
           <span>{formatPersianNumber(Number(row?.remain), 4)}</span>
-          <span className="text-[#676767]"> {"toman"}</span>
+          <span className="text-[#676767]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -39,7 +39,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex-col">
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
-          <span className="text-[#676767]"> {"toman"}</span>
+          <span className="text-[#676767]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -49,20 +49,20 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex-col">
           <span>{formatPersianNumber(Number(row?.value), 4)}</span>
-          <span className="text-[#676767]"> {"toman"}</span>
+          <span className="text-[#676767]"> {"تومان"}</span>
         </div>
       ),
     },
   ];
 
-  const dealsColumns = [
+  const dealsColumns: Column<OrderType>[] = [
     {
       header: "مقدار هدف",
       accessor: "match_amount",
       render: (row: OrderType) => (
         <div className="flex flex-col">
           <span>{formatPersianNumber(Number(row?.match_amount), 2)}</span>
-          <span className="text-[#676767]"> {"toman"}</span>
+          <span className="text-[#676767]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -72,7 +72,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex-col">
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
-          <span className="text-[#676767]"> {"toman"}</span>
+          <span className="text-[#676767]"> {"تومان"}</span>
         </div>
       ),
     },

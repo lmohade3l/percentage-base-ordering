@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import CustomTable, { Column } from "../table";
 import { OrderType } from "@/types/order";
 import { formatPersianNumber } from "@/lib/numberUtils";
@@ -6,6 +5,7 @@ import { formatJallali } from "@/lib/dateUtils";
 import Summary from "./Summary";
 import { useMemo } from "react";
 import Calculator from "./Calculator";
+import { useFetchData } from "@/hooks/useFetchData";
 
 export default function OrdersList({
   marketId,
@@ -14,13 +14,11 @@ export default function OrdersList({
   marketId: number;
   type: "buy" | "sell" | "deals";
 }) {
-  const fetcher = (...args: [string, RequestInit?]) =>
-    fetch(...args).then((res) => res.json());
-  const { data } = useSWR(
+  const { data } = useFetchData<{ orders: OrderType[] } | OrderType[]>(
     type === "deals"
       ? `https://api.bitpin.org/v1/mth/matches/${marketId}/`
       : `https://api.bitpin.org/v2/mth/actives/${marketId}/?type=${type}`,
-    fetcher
+    3000
   );
 
   const buyOrsellColumns: Column<OrderType>[] = [
@@ -125,7 +123,7 @@ export default function OrdersList({
   const calculateSummary = useMemo(() => {
     if (!data || type === "deals") return null;
 
-    const orders = (data.orders || data.results)?.slice(0, 10) || [];
+    const orders = (data as { orders: OrderType[] }).orders?.slice(0, 10) || [];
 
     if (!orders || orders.length === 0) return null;
 
@@ -157,9 +155,9 @@ export default function OrdersList({
     if (!data) return [];
 
     if (type === "deals") {
-      return data.slice(0, 10) || [];
+      return (data as OrderType[]).slice(0, 10) || [];
     } else {
-      return (data.orders || data.results || []).slice(0, 10);
+      return ((data as { orders: OrderType[] }).orders || []).slice(0, 10);
     }
   }, [data, type]);
 

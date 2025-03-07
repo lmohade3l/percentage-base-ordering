@@ -1,14 +1,17 @@
-import useSWR from "swr";
 import { useState } from "react";
 import { formatPersianNumber } from "@/lib/numberUtils";
 import { MarketType } from "@/types/market";
 import { useNavigate } from "react-router-dom";
 import CustomTable, { Column } from "@/components/table";
+import { useFetchData } from "@/hooks/useFetchData";
 
 export default function MarketsPage() {
-  const fetcher = (...args: [string, RequestInit?]) =>
-    fetch(...args).then((res) => res.json());
-  const { data } = useSWR("https://api.bitpin.org/v1/mkt/markets/", fetcher);
+  const { data } = useFetchData<{ results: MarketType[] }>(
+    "https://api.bitpin.org/v1/mkt/markets/",
+    10000
+  );
+
+  console.log(data);
 
   const navigate = useNavigate();
 
@@ -133,12 +136,13 @@ export default function MarketsPage() {
 
       <CustomTable
         columns={columns}
-        // data={filteredData || []}
-        data={data?.results?.filter((d: MarketType) =>
-          selectedMarketBase === "تتر"
-            ? d?.currency2?.code === "USDT"
-            : d?.currency2?.code === "IRT"
-        ) || []}
+        data={
+          data?.results?.filter((d: MarketType) =>
+            selectedMarketBase === "تتر"
+              ? d?.currency2?.code === "USDT"
+              : d?.currency2?.code === "IRT"
+          ) || []
+        }
         onRowClick={null}
         pageSize={10}
         pageSizeOptions={[5, 10, 15, 20]}

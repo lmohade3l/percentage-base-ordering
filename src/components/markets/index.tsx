@@ -7,7 +7,7 @@ import { useFetchData } from "@/hooks/useFetchData";
 
 export default function MarketsPage() {
   const { data } = useFetchData<{ results: MarketType[] }>(
-    "https://api.bitpin.org/v1/mkt/markets/",
+    `/v1/mkt/markets/`,
     10000
   );
 

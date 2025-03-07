@@ -17,11 +17,11 @@ export default function OrdersList({
 }) {
   const { data } = useFetchData<{ orders: OrderType[] } | OrderType[]>(
     type === "deals"
-      ? `https://api.bitpin.org/v1/mth/matches/${marketId}/`
-      : `https://api.bitpin.org/v2/mth/actives/${marketId}/?type=${type}`,
+      ? `/v1/mth/matches/${marketId}/`
+      : `/v2/mth/actives/${marketId}/?type=${type}`,
     3000
   );
-  const isMobile = useIsMobile()
+  const isMobile = useIsMobile();
 
   const buyOrsellColumns: Column<OrderType>[] = [
     {
@@ -178,7 +178,12 @@ export default function OrdersList({
       />
 
       {calculateSummary && type !== "deals" && (
-        <div className={`${isMobile ? "felx flex-col" :  "grid grid-cols-2 gap-3"} `} style={{gridTemplateColumns:"1fr 2fr"}}>
+        <div
+          className={`${
+            isMobile ? "felx flex-col" : "grid grid-cols-2 gap-3"
+          } `}
+          style={{ gridTemplateColumns: "1fr 2fr" }}
+        >
           <Summary summary={calculateSummary} type={type} />
           <Calculator summary={calculateSummary} type={type} />
         </div>

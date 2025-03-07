@@ -35,7 +35,7 @@ export default function OrdersList({
   ];
   const dealsColumns = [
     {
-      header: "قیمت هدف",
+      header: "مقدار هدف",
       accessor: "match_amount",
     },
     {

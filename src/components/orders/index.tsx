@@ -5,20 +5,18 @@ import OrdersList from "./OrdersList";
 export function OrdersPage() {
   const { marketId } = useParams();
 
-  console.log({marketId})
-
   return (
-    <div className="dir-rtl w-full">
-      <Tabs defaultValue="sell" className="w-full m-2">
+    <div className="w-full rtl">
+      <Tabs defaultValue="buy" className="w-full m-2" dir="rtl">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger className="cursor-[pointer]" value="deals">
-            معاملات
-          </TabsTrigger>
           <TabsTrigger className="cursor-[pointer]" value="buy">
             سفارشات خرید
           </TabsTrigger>
           <TabsTrigger className="cursor-[pointer]" value="sell">
             سفارشات فروش
+          </TabsTrigger>
+          <TabsTrigger className="cursor-[pointer]" value="deals">
+            معاملات
           </TabsTrigger>
         </TabsList>
         <TabsContent value="deals">

@@ -95,10 +95,6 @@ export default function MarketsPage() {
     },
   ];
 
-  const handleRowClick = (row: MarketType) => {
-    console.log("Row clicked:", row);
-  };
-
   useEffect(() => {
     if (!data) return;
     const filtered = data?.results?.filter((d: MarketType) =>
@@ -150,7 +146,7 @@ export default function MarketsPage() {
       <CustomTable
         columns={columns}
         data={filteredData || []}
-        onRowClick={handleRowClick}
+        onRowClick={null}
         pageSize={10}
         pageSizeOptions={[5, 10, 15, 20]}
         rowHeight={80}

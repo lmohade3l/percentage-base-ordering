@@ -1,0 +1,36 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useParams } from "react-router-dom";
+import OrdersList from "./OrdersList";
+
+export function OrdersPage() {
+  const { marketId } = useParams();
+
+  console.log({marketId})
+
+  return (
+    <div className="border rounded-lg dir-rtl w-full">
+      <Tabs defaultValue="account" className="w-[400px] m-2 ">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger className="cursor-[pointer]" value="deals">
+            معاملات
+          </TabsTrigger>
+          <TabsTrigger className="cursor-[pointer]" value="buy">
+            سفارشات خرید
+          </TabsTrigger>
+          <TabsTrigger className="cursor-[pointer]" value="sell">
+            سفارشات فروش
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="deals">
+          <OrdersList type="deal" marketId={Number(marketId)} />
+        </TabsContent>
+        <TabsContent value="buy">
+          <OrdersList type="buy" marketId={Number(marketId)} />
+        </TabsContent>
+        <TabsContent value="sell">
+          <OrdersList type="sell" marketId={Number(marketId)} />
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}

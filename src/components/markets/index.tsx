@@ -85,7 +85,7 @@ export default function MarketsPage() {
       render: (row: MarketType) => (
         <div className="flex flex-col">
           <button
-            onClick={() => navigate(`/orders/marketId=${row?.id}`)}
+            onClick={() => navigate(`/orders/${row?.id}`)}
             className="rounded-[10px] bg-[#00D890] py-1  cursor-[pointer]"
           >
             سفارشات

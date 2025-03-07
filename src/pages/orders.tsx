@@ -1,5 +1,5 @@
+import { OrdersPage } from "@/components/orders";
+
 export default function Orders() {
-    return(
-        <div>orders page</div>
-    )
+  return <OrdersPage />;
 }

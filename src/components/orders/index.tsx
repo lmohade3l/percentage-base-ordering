@@ -9,7 +9,7 @@ export function OrdersPage() {
 
   return (
     <div className="dir-rtl w-full">
-      <Tabs defaultValue="account" className="w-full m-2">
+      <Tabs defaultValue="sell" className="w-full m-2">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger className="cursor-[pointer]" value="deals">
             معاملات

@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatPersianNumber } from "@/lib/numberUtils";
 import { MarketType } from "@/types/market";
 import { useNavigate } from "react-router-dom";

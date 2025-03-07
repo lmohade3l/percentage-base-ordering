@@ -27,9 +27,9 @@ export default function OrdersList({
       header: "باقی مانده",
       accessor: "remain",
       render: (row: OrderType) => (
-        <div className="flex flex-col">
+        <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.remain), 4)}</span>
-          <span className="text-[#676767]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -37,9 +37,9 @@ export default function OrdersList({
       header: "قیمت",
       accessor: "price",
       render: (row: OrderType) => (
-        <div className="flex flex-col">
+        <div className="flex flex  gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
-          <span className="text-[#676767]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -47,9 +47,9 @@ export default function OrdersList({
       header: "ارزش",
       accessor: "value",
       render: (row: OrderType) => (
-        <div className="flex flex-col">
+        <div className="flex flex  gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.value), 4)}</span>
-          <span className="text-[#676767]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -60,9 +60,9 @@ export default function OrdersList({
       header: "مقدار هدف",
       accessor: "match_amount",
       render: (row: OrderType) => (
-        <div className="flex flex-col">
+        <div className="flex flex  gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.match_amount), 2)}</span>
-          <span className="text-[#676767]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
         </div>
       ),
     },
@@ -70,20 +70,16 @@ export default function OrdersList({
       header: "قیمت",
       accessor: "price",
       render: (row: OrderType) => (
-        <div className="flex flex-col">
+        <div className="flex flex" gap-1 items-end>
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
-          <span className="text-[#676767]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
         </div>
       ),
     },
     {
       header: "تاریخ",
       accessor: "time",
-      render: (row: OrderType) => (
-        <div className="flex flex-col">
-          <span>{formatJallali(row?.time)}</span>
-        </div>
-      ),
+      render: (row: OrderType) => <span>{formatJallali(row?.time)}</span>,
     },
   ];
   return (
@@ -97,10 +93,10 @@ export default function OrdersList({
             ? data?.slice(0, 10)
             : data?.orders?.slice(0, 10) || []
         }
-        onRowClick={() => {}}
+        onRowClick={null}
         pageSize={10}
         pageSizeOptions={[5, 10, 15, 20]}
-        rowHeight={50}
+        rowHeight={45}
       />
     </div>
   );

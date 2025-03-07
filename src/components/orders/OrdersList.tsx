@@ -176,7 +176,7 @@ export default function OrdersList({
       />
 
       {calculateSummary && type !== "deals" && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3" style={{gridTemplateColumns:"1fr 2fr"}}>
           <Summary summary={calculateSummary} type={type} />
           <Calculator summary={calculateSummary} type={type} />
         </div>

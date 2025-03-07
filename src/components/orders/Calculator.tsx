@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
+import { useMarket } from "@/hooks/useMarket";
 
 interface CalculatorProps {
   summary: {
@@ -27,6 +28,7 @@ export default function Calculator({ summary, type }: CalculatorProps) {
     weightedAvgPrice: 0,
     totalPaymentAmount: 0,
   });
+  const { currentCoin } = useMarket();
 
   useEffect(() => {
     if (summary) {
@@ -92,7 +94,7 @@ export default function Calculator({ summary, type }: CalculatorProps) {
               <p className="font-semibold text-lg">
                 {formatPersianNumber(calculatedValues.totalRemain, 4)}
                 <span className="text-[#676767] text-[13px] mr-1">
-                  {type === "buy" ? "واحد" : "تومان"}
+                  {currentCoin?.currency2?.title_fa}
                 </span>
               </p>
             </CardContent>
@@ -103,7 +105,9 @@ export default function Calculator({ summary, type }: CalculatorProps) {
               <p className="text-sm text-gray-500">میانگین قیمت ارز</p>
               <p className="font-semibold text-lg">
                 {formatPersianNumber(calculatedValues.weightedAvgPrice, 4)}
-                <span className="text-[#676767] text-[13px] mr-1">تومان</span>
+                <span className="text-[#676767] text-[13px] mr-1">
+                  {currentCoin?.currency2?.title_fa}
+                </span>
               </p>
             </CardContent>
           </Card>
@@ -114,7 +118,7 @@ export default function Calculator({ summary, type }: CalculatorProps) {
               <p className="font-semibold text-lg">
                 {formatPersianNumber(calculatedValues.totalPaymentAmount, 4)}
                 <span className="text-[#676767] text-[13px] mr-1">
-                  {type === "buy" ? "تومان" : "واحد"}
+                  {currentCoin?.currency2?.title_fa}
                 </span>
               </p>
             </CardContent>

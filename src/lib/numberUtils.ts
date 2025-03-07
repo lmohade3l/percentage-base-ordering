@@ -1,7 +1,12 @@
-export function formatPersianNumber(num: number, decimalPlaces: number = 0) {
+export function formatPersianNumber(
+  num: number,
+  decimalPlaces: number = 0,
+  plusSign: boolean = false
+) {
   if (num === null || num === undefined) return "";
 
   const isNegative = num < 0;
+  const isPositive = num > 0;
 
   const absNum = Math.abs(num);
   const numStr = String(absNum);
@@ -27,15 +32,19 @@ export function formatPersianNumber(num: number, decimalPlaces: number = 0) {
     return ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"][parseInt(d)];
   });
 
-  return isNegative ? persianDigits + "-" : persianDigits;
+  return isNegative
+    ? persianDigits + "-"
+    : plusSign && isPositive
+    ? persianDigits + "+"
+    : persianDigits;
 }
 
 export function toPersianNumber(num: number | string) {
-    if (num === null || num === undefined) return "";
-  
-    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  
-    return num.toString().replace(/\d/g, function (d) {
-      return persianDigits[parseInt(d)];
-    });
-  }
+  if (num === null || num === undefined) return "";
+
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+
+  return num.toString().replace(/\d/g, function (d) {
+    return persianDigits[parseInt(d)];
+  });
+}

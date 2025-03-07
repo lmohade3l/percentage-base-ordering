@@ -4,6 +4,7 @@ import { MarketType } from "@/types/market";
 import { useNavigate } from "react-router-dom";
 import CustomTable, { Column } from "@/components/table";
 import { useFetchData } from "@/hooks/useFetchData";
+import { useMarket } from "@/hooks/useMarket";
 
 export default function MarketsPage() {
   const { data } = useFetchData<{ results: MarketType[] }>(
@@ -11,11 +12,10 @@ export default function MarketsPage() {
     10000
   );
 
-  console.log(data);
-
   const navigate = useNavigate();
 
   const [selectedMarketBase, setSelectedMarketBase] = useState("تومان");
+  const { selectCoin } = useMarket();
 
   const columns: Column<MarketType>[] = [
     {
@@ -57,36 +57,39 @@ export default function MarketsPage() {
               ? "text-[#EA373F]"
               : "text-[#000]"
           } font-[700] `}
-        >{`% ${formatPersianNumber(row?.price_info?.change, 2)} `}</span>
+        >{`% ${formatPersianNumber(row?.price_info?.change, 2, true)} `}</span>
       ),
     },
-    {
-      header: "ارزش معاملات ۲۴ ساعت",
-      accessor: "market_cap",
-      render: (row: MarketType) => (
-        <div className="flex flex-col">
-          <span>{formatPersianNumber(Number(row?.market_cap))}</span>
-          <span className="text-[#676767]"> {row?.currency2?.title_fa}</span>
-        </div>
-      ),
-    },
-    {
-      header: "حجم معاملات ۲۴ ساعت",
-      accessor: "volume_24h",
-      render: (row: MarketType) => (
-        <div className="flex flex-col">
-          <span>{formatPersianNumber(Number(row?.volume_24h))}</span>
-          <span className="text-[#676767]"> {row?.currency2?.title_fa}</span>
-        </div>
-      ),
-    },
+    // {
+    //   header: "ارزش معاملات ۲۴ ساعت",
+    //   accessor: "market_cap",
+    //   render: (row: MarketType) => (
+    //     <div className="flex flex-col">
+    //       <span>{formatPersianNumber(Number(row?.market_cap))}</span>
+    //       <span className="text-[#676767]"> {row?.currency2?.title_fa}</span>
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   header: "حجم معاملات ۲۴ ساعت",
+    //   accessor: "volume_24h",
+    //   render: (row: MarketType) => (
+    //     <div className="flex flex-col">
+    //       <span>{formatPersianNumber(Number(row?.volume_24h))}</span>
+    //       <span className="text-[#676767]"> {row?.currency2?.title_fa}</span>
+    //     </div>
+    //   ),
+    // },
     {
       header: "",
       accessor: "actions",
       render: (row: MarketType) => (
         <div className="flex flex-col">
           <button
-            onClick={() => navigate(`/orders/${row?.id}`)}
+            onClick={() => {
+              selectCoin(row);
+              navigate(`/orders/${row?.id}`);
+            }}
             className="rounded-[10px] bg-[#00D890] py-1  cursor-[pointer]"
           >
             سفارشات

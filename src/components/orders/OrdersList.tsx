@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import Calculator from "./Calculator";
 import { useFetchData } from "@/hooks/useFetchData";
 import useIsMobile from "@/hooks/useIsMobile";
+import { useMarket } from "@/hooks/useMarket";
 
 export default function OrdersList({
   marketId,
@@ -22,6 +23,8 @@ export default function OrdersList({
     3000
   );
   const isMobile = useIsMobile();
+  const { currentCoin } = useMarket();
+
 
   const buyOrsellColumns: Column<OrderType>[] = [
     {
@@ -30,7 +33,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.remain), 4)}</span>
-          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {currentCoin?.currency2?.title_fa}</span>
         </div>
       ),
     },
@@ -40,7 +43,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
-          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {currentCoin?.currency2?.title_fa}</span>
         </div>
       ),
     },
@@ -50,7 +53,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.value), 4)}</span>
-          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {currentCoin?.currency2?.title_fa}</span>
         </div>
       ),
     },
@@ -60,8 +63,10 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex gap-1 items-end">
           <span>
-            {(100 - (Number(row?.remain) / Number(row?.amount)) * 100).toFixed(
-              2
+            {formatPersianNumber(
+              100 - (Number(row?.remain) / Number(row?.amount)) * 100,
+              1,
+              true
             )}
           </span>
         </div>
@@ -94,7 +99,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.match_amount), 2)}</span>
-          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {currentCoin?.currency2?.title_fa}</span>
         </div>
       ),
     },
@@ -104,7 +109,7 @@ export default function OrdersList({
       render: (row: OrderType) => (
         <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
-          <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
+          <span className="text-[#676767] text-[13px]"> {currentCoin?.currency2?.title_fa}</span>
         </div>
       ),
     },

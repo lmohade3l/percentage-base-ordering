@@ -6,6 +6,7 @@ import Summary from "./Summary";
 import { useMemo } from "react";
 import Calculator from "./Calculator";
 import { useFetchData } from "@/hooks/useFetchData";
+import useIsMobile from "@/hooks/useIsMobile";
 
 export default function OrdersList({
   marketId,
@@ -20,6 +21,7 @@ export default function OrdersList({
       : `https://api.bitpin.org/v2/mth/actives/${marketId}/?type=${type}`,
     3000
   );
+  const isMobile = useIsMobile()
 
   const buyOrsellColumns: Column<OrderType>[] = [
     {
@@ -176,7 +178,7 @@ export default function OrdersList({
       />
 
       {calculateSummary && type !== "deals" && (
-        <div className="grid grid-cols-2 gap-3" style={{gridTemplateColumns:"1fr 2fr"}}>
+        <div className={`${isMobile ? "felx flex-col" :  "grid grid-cols-2 gap-3"} `} style={{gridTemplateColumns:"1fr 2fr"}}>
           <Summary summary={calculateSummary} type={type} />
           <Calculator summary={calculateSummary} type={type} />
         </div>

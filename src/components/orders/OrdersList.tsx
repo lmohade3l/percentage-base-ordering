@@ -6,16 +6,18 @@ export default function OrdersList({
   type,
 }: {
   marketId: number;
-  type: "buy" | "sell" | "deal";
+  type: "buy" | "sell" | "deals";
 }) {
   const fetcher = (...args: [string, RequestInit?]) =>
     fetch(...args).then((res) => res.json());
   const { data } = useSWR(
-    type === "deal"
+    type === "deals"
       ? `https://api.bitpin.org/v1/mth/matches/${marketId}/`
       : `https://api.bitpin.org/v2/mth/actives/${marketId}/?type=${type}`,
     fetcher
   );
+
+  console.log({ type });
 
   const buyOrsellColumns = [
     {
@@ -48,9 +50,11 @@ export default function OrdersList({
   return (
     <div>
       <CustomTable
-        columns={(type === "buy" || "sell" )? buyOrsellColumns : dealsColumns}
+        columns={
+          type === "buy" || type === "sell" ? buyOrsellColumns : dealsColumns
+        }
         data={
-          type === "deal"
+          type === "deals"
             ? data?.slice(0, 10)
             : data?.orders?.slice(0, 10) || []
         }

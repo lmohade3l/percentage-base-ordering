@@ -22,7 +22,7 @@ export function OrdersPage() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="deals">
-          <OrdersList type="deal" marketId={Number(marketId)} />
+          <OrdersList type="deals" marketId={Number(marketId)} />
         </TabsContent>
         <TabsContent value="buy">
           <OrdersList type="buy" marketId={Number(marketId)} />

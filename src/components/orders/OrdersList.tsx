@@ -5,6 +5,7 @@ import { formatPersianNumber } from "@/lib/numberUtils";
 import { formatJallali } from "@/lib/dateUtils";
 import Summary from "./Summary";
 import { useMemo } from "react";
+import Calculator from "./Calculator";
 
 export default function OrdersList({
   marketId,
@@ -177,7 +178,10 @@ export default function OrdersList({
       />
 
       {calculateSummary && type !== "deals" && (
-        <Summary summary={calculateSummary} type={type} />
+        <div className="grid grid-cols-2 gap-3">
+          <Summary summary={calculateSummary} type={type} />
+          <Calculator summary={calculateSummary} type={type} />
+        </div>
       )}
     </div>
   );

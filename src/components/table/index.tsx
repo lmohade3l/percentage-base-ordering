@@ -12,7 +12,7 @@ import { toPersianNumber } from "@/lib/numberUtils";
 
 export interface Column<T> {
   header: React.ReactNode;
-  accessor?: keyof T | "actions";
+  accessor?: keyof T | "actions" | "status";
   render?: (row: T, rowIndex: number) => React.ReactNode;
 }
 

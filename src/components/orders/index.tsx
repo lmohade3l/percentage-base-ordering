@@ -8,8 +8,8 @@ export function OrdersPage() {
   console.log({marketId})
 
   return (
-    <div className="border rounded-lg dir-rtl w-full">
-      <Tabs defaultValue="account" className="w-[60%] m-2 ">
+    <div className="dir-rtl w-full">
+      <Tabs defaultValue="account" className="w-full m-2">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger className="cursor-[pointer]" value="deals">
             معاملات

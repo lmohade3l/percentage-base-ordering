@@ -6,4 +6,5 @@ export interface OrderType {
   type: "buy" | "sell";
   match_id: string;
   remain : string;
+  amount: string;
 }

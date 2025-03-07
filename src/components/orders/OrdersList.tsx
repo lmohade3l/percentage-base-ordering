@@ -44,12 +44,39 @@ export default function OrdersList({
       ),
     },
     {
-      header: "ارزش",
+      header: "ارزش باقی مانده",
       accessor: "value",
       render: (row: OrderType) => (
         <div className="flex flex  gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.value), 4)}</span>
           <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
+        </div>
+      ),
+    },
+    {
+      header: "درصد پرشده",
+      accessor: "value",
+      render: (row: OrderType) => (
+        <div className="flex flex  gap-1 items-end">
+          <span>{(100 - ((Number(row?.remain) / Number(row?.amount))*100)).toFixed(2)}</span>
+        </div>
+      ),
+    },
+    {
+      header: "وضعیت",
+      accessor: "status",
+      render: (row: OrderType) => (
+        <div className="flex flex  gap-1 items-end">
+          <span>{Number(row?.remain) === 0 ? "تمام شده" : "در انتظار"}</span>
+        </div>
+      ),
+    },
+    {
+      header: "",
+      accessor: "actions",
+      render: (row: OrderType) => (
+        <div className="flex flex  gap-1 items-end">
+          <button>{"لغو"}</button>
         </div>
       ),
     },
@@ -70,7 +97,7 @@ export default function OrdersList({
       header: "قیمت",
       accessor: "price",
       render: (row: OrderType) => (
-        <div className="flex flex" gap-1 items-end>
+        <div className="flex flex gap-1 items-end">
           <span>{formatPersianNumber(Number(row?.price), 4)}</span>
           <span className="text-[#676767] text-[13px]"> {"تومان"}</span>
         </div>
@@ -80,6 +107,13 @@ export default function OrdersList({
       header: "تاریخ",
       accessor: "time",
       render: (row: OrderType) => <span>{formatJallali(row?.time)}</span>,
+    },
+    {
+      header: "نوع سفارش",
+      accessor: "time",
+      render: (row: OrderType) => (
+        <span>{row?.type === "buy" ? "خرید" : "فروش"}</span>
+      ),
     },
   ];
   return (

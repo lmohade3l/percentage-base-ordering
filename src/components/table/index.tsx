@@ -10,9 +10,9 @@ import {
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import { toPersianNumber } from "@/lib/numberUtils";
 
-interface Column<T> {
+export interface Column<T> {
   header: React.ReactNode;
-  accessor?: keyof T;
+  accessor?: keyof T | "actions";
   render?: (row: T, rowIndex: number) => React.ReactNode;
 }
 
@@ -102,7 +102,7 @@ export default function CustomTable<T>({
     }
     
     if (column.accessor) {
-      const value = row[column.accessor];
+      const value = row[(column.accessor as keyof T)];
       return value !== null && value !== undefined ? String(value) : null;
     }
     

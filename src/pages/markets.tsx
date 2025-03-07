@@ -1,12 +1,5 @@
-import useSWR from "swr"
+import MarketsPage from "@/components/markets";
 
 export default function Markets() {
-
-    const fetcher = (...args: [string, RequestInit?]) => fetch(...args).then(res => res.json())
-    const { data, error } = useSWR("https://api.bitpin.org/v1/mkt/markets/", fetcher)
-
-
-    return (
-        <div>markets page</div>
-    )
+  return <MarketsPage />;
 }

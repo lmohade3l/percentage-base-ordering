@@ -1,10 +1,4 @@
-export function formatPersianNumber({
-  num,
-  decimalPlaces = 0,
-}: {
-  num: number;
-  decimalPlaces: number;
-}) {
+export function formatPersianNumber(num: number, decimalPlaces: number = 0) {
   if (num === null || num === undefined) return "";
 
   const isNegative = num < 0;

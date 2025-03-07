@@ -26,17 +26,35 @@ export default function OrdersList({
     {
       header: "باقی مانده",
       accessor: "remain",
+      render: (row: OrderType) => (
+        <div className="flex flex-col">
+          <span>{formatPersianNumber(Number(row?.remain), 4)}</span>
+          <span className="text-[#676767]"> {"toman"}</span>
+        </div>
+      ),
     },
     {
       header: "قیمت",
       accessor: "price",
+      render: (row: OrderType) => (
+        <div className="flex flex-col">
+          <span>{formatPersianNumber(Number(row?.price), 4)}</span>
+          <span className="text-[#676767]"> {"toman"}</span>
+        </div>
+      ),
     },
     {
       header: "ارزش",
       accessor: "value",
+      render: (row: OrderType) => (
+        <div className="flex flex-col">
+          <span>{formatPersianNumber(Number(row?.value), 4)}</span>
+          <span className="text-[#676767]"> {"toman"}</span>
+        </div>
+      ),
     },
   ];
-  
+
   const dealsColumns = [
     {
       header: "مقدار هدف",

@@ -1,4 +1,3 @@
-"use client";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
 import { formatPersianNumber } from "@/lib/numberUtils";
@@ -14,7 +13,6 @@ export default function MarketsPage() {
   const navigate = useNavigate();
 
   const [selectedMarketBase, setSelectedMarketBase] = useState("تومان");
-  const [filteredData, setFilteredData] = useState([]);
 
   const columns: Column<MarketType>[] = [
     {
@@ -95,16 +93,6 @@ export default function MarketsPage() {
     },
   ];
 
-  useEffect(() => {
-    if (!data) return;
-    const filtered = data?.results?.filter((d: MarketType) =>
-      selectedMarketBase === "تتر"
-        ? d?.currency2?.code === "USDT"
-        : d?.currency2?.code === "IRT"
-    );
-    setFilteredData(filtered);
-  }, [selectedMarketBase, data]);
-
   return (
     <div dir="rtl" className="text-right border rounded-lg pb-2">
       <div className="flex justify-between items-center p-2 border-b">
@@ -145,7 +133,12 @@ export default function MarketsPage() {
 
       <CustomTable
         columns={columns}
-        data={filteredData || []}
+        // data={filteredData || []}
+        data={data?.results?.filter((d: MarketType) =>
+          selectedMarketBase === "تتر"
+            ? d?.currency2?.code === "USDT"
+            : d?.currency2?.code === "IRT"
+        ) || []}
         onRowClick={null}
         pageSize={10}
         pageSizeOptions={[5, 10, 15, 20]}

@@ -58,7 +58,11 @@ export default function OrdersList({
       accessor: "value",
       render: (row: OrderType) => (
         <div className="flex flex  gap-1 items-end">
-          <span>{(100 - ((Number(row?.remain) / Number(row?.amount))*100)).toFixed(2)}</span>
+          <span>
+            {(100 - (Number(row?.remain) / Number(row?.amount)) * 100).toFixed(
+              2
+            )}
+          </span>
         </div>
       ),
     },
@@ -74,7 +78,7 @@ export default function OrdersList({
     {
       header: "",
       accessor: "actions",
-      render: (row: OrderType) => (
+      render: () => (
         <div className="flex flex  gap-1 items-end">
           <button>{"لغو"}</button>
         </div>
@@ -131,6 +135,7 @@ export default function OrdersList({
         pageSize={10}
         pageSizeOptions={[5, 10, 15, 20]}
         rowHeight={45}
+        pagination={false}
       />
     </div>
   );

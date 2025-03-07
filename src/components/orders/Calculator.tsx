@@ -1,19 +1,28 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import { formatPersianNumber } from "@/lib/numberUtils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
 
-export default function Calculator({
-  summary,
-  type,
-}: {
+interface CalculatorProps {
   summary: {
     totalRemain: number;
     totalValue: number;
     weightedAvgPrice: number;
-  };
+  } | null;
   type: "buy" | "sell" | "deals";
-}) {
-  const [percentage, setPercentage] = useState(100);
-  const [calculatedValues, setCalculatedValues] = useState({
+}
+
+interface CalculatedValues {
+  totalRemain: number;
+  weightedAvgPrice: number;
+  totalPaymentAmount: number;
+}
+
+export default function Calculator({ summary, type }: CalculatorProps) {
+  const [percentage, setPercentage] = useState<number>(100);
+  const [calculatedValues, setCalculatedValues] = useState<CalculatedValues>({
     totalRemain: 0,
     weightedAvgPrice: 0,
     totalPaymentAmount: 0,
@@ -38,55 +47,80 @@ export default function Calculator({
     setPercentage(value);
   };
 
+  const handleSliderChange = (value: number[]) => {
+    setPercentage(value[0]);
+  };
+
+  if (!summary) {
+    return null;
+  }
+
   return (
-    <div className="mt-4 p-4 border rounded-md bg-gray-50">
-      <h3 className="text-lg font-medium mb-3">محاسبه گر سفارش</h3>
-
-      <div className="mb-4">
-        <label htmlFor="percentage" className="block mb-1">
-          درصد موردنظر:
-        </label>
-        <input
-          id="percentage"
-          type="number"
-          min="0"
-          max="100"
-          value={percentage}
-          onChange={handlePercentageChange}
-          className="p-2 border rounded w-full"
-          dir="rtl"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-3 border rounded bg-white">
-          <p className="text-sm text-gray-500">مجموع حجم ارز قابل دریافت</p>
-          <p className="text-lg font-medium mt-1">
-            {formatPersianNumber(calculatedValues.totalRemain, 4)}
-            <span className="text-[#676767] text-[13px] mr-1">
-              {type === "buy" ? "واحد" : "تومان"}
-            </span>
-          </p>
+    <Card className="mt-4">
+      <CardHeader>
+        <CardTitle className="text-lg">محاسبه گر سفارش</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="mb-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="percentage">درصد موردنظر: {percentage}%</Label>
+            <Input
+              id="percentage"
+              type="number"
+              min="0"
+              max="100"
+              value={percentage}
+              onChange={handlePercentageChange}
+              className="w-full"
+              dir="rtl"
+            />
+          </div>
+          <Slider
+            defaultValue={[percentage]}
+            max={100}
+            step={1}
+            value={[percentage]}
+            onValueChange={handleSliderChange}
+            className="py-2"
+          />
         </div>
 
-        <div className="p-3 border rounded bg-white">
-          <p className="text-sm text-gray-500">میانگین قیمت ارز</p>
-          <p className="text-lg font-medium mt-1">
-            {formatPersianNumber(calculatedValues.weightedAvgPrice, 4)}
-            <span className="text-[#676767] text-[13px] mr-1">تومان</span>
-          </p>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="border shadow-sm h-20">
+            <CardContent className=" flex flex-col justify-between h-full -my-2">
+              <p className="text-sm text-gray-500">مجموع حجم ارز قابل دریافت</p>
+              <p className="font-semibold text-lg">
+                {formatPersianNumber(calculatedValues.totalRemain, 4)}
+                <span className="text-[#676767] text-[13px] mr-1">
+                  {type === "buy" ? "واحد" : "تومان"}
+                </span>
+              </p>
+            </CardContent>
+          </Card>
 
-        <div className="p-3 border rounded bg-white">
-          <p className="text-sm text-gray-500">مجموع مبلغ قابل پرداخت</p>
-          <p className="text-lg font-medium mt-1">
-            {formatPersianNumber(calculatedValues.totalPaymentAmount, 4)}
-            <span className="text-[#676767] text-[13px] mr-1">
-              {type === "buy" ? "تومان" : "واحد"}
-            </span>
-          </p>
+          <Card className="border shadow-sm h-20">
+            <CardContent className="flex flex-col justify-between h-full -my-2">
+              <p className="text-sm text-gray-500">میانگین قیمت ارز</p>
+              <p className="font-semibold text-lg">
+                {formatPersianNumber(calculatedValues.weightedAvgPrice, 4)}
+                <span className="text-[#676767] text-[13px] mr-1">تومان</span>
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border shadow-sm h-20">
+            <CardContent className="flex flex-col justify-between h-full -my-2">
+              <p className="text-sm text-gray-500">مجموع مبلغ قابل پرداخت</p>
+              <p className="font-semibold text-lg">
+                {formatPersianNumber(calculatedValues.totalPaymentAmount, 4)}
+                <span className="text-[#676767] text-[13px] mr-1">
+                  {type === "buy" ? "تومان" : "واحد"}
+                </span>
+              </p>
+            </CardContent>
+          </Card>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
